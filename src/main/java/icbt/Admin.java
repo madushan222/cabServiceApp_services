@@ -10,7 +10,7 @@ package icbt;
  */
 public class Admin {
     private String fName,lname,nic,dob,email,username,password;
-    private int mobile,branchId;
+    private int mobile,branchId,userId;
     
     public Admin() {
         this.fName = "";
@@ -22,9 +22,10 @@ public class Admin {
         this.password = "";
         this.mobile = 0;
         this.branchId = 0;
+        this.userId = 0;
     }
 
-    public Admin(String fName, String lname, String nic, String dob, String email, String username, String password, int mobile, int branchId) {
+    public Admin(String fName, String lname, String nic, String dob, String email, String username, String password, int mobile, int branchId, int userId) {
         this.fName = fName;
         this.lname = lname;
         this.nic = nic;
@@ -34,6 +35,7 @@ public class Admin {
         this.password = password;
         this.mobile = mobile;
         this.branchId = branchId;
+        this.userId = branchId;
     }
 
     public String getfName() {
@@ -107,6 +109,16 @@ public class Admin {
     public void setBranchId(int branchId) {
         this.branchId = branchId;
     }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+    
+    
     
     
 }
