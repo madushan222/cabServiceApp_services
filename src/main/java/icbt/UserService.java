@@ -2,8 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/WebServices/WebService.java to edit this template
  */
-package lk.icbt;
+package icbt;
 
+import java.util.List;
 import javax.jws.WebService;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
@@ -27,6 +28,12 @@ public class UserService {
     public boolean addAdmin(@WebParam(name = "admin") Admin admin){
         DBUtil util = new DBUtil();
         return util.addAdmin(admin);
+    }
+    
+    @WebMethod(operationName = "getAdmins")
+    public List<Admin> getAdmins(){
+        DBUtil util = new DBUtil();
+        return util.getAdmins();
     }
             
 }
