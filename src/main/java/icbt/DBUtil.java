@@ -64,7 +64,7 @@ public class DBUtil {
         return admins;
    }
 
-   public boolean deleteAdmin(int userId){
+   public boolean deleteUser(int userId){
        int rowAffected = 0;
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -117,4 +117,88 @@ public class DBUtil {
         }
        return rowAffected > 0;
    }
+    
+    public boolean addCustomer(Customer customer){
+       int rowAffected = 0;
+        try{
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
+            Statement statement = conn.createStatement();
+            rowAffected = statement.executeUpdate("INSERT INTO user (fName,lName,nic,email,address1,address2,username,password,userType,mobile) VALUES ('"+customer.getfName()+"','"+customer.getLname()+"','"+customer.getNic()+"','"+customer.getEmail()+"','"+customer.getAddress1()+"','"+customer.getAddress2()+"','"+customer.getUsername()+"','"+customer.getPassword()+"','CUSTOMER','"+customer.getMobile()+"')");
+        }catch(ClassNotFoundException | SQLException e){
+            System.out.print(e.getMessage());
+        }
+       return rowAffected > 0;
+   }
+    
+   public List<Customer> getCustomers(){
+       List<Customer> customers = new ArrayList<>();
+        try{
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
+            Statement statement = conn.createStatement();
+            
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM user WHERE userType = 'CUSTOMER'");
+            
+            while(resultSet.next())
+            {
+                Customer cus = new Customer();
+                cus.setUserId(resultSet.getInt("userId"));
+                cus.setfName(resultSet.getString("fName"));
+                cus.setLname(resultSet.getString("lName"));
+                cus.setAddress1(resultSet.getString("address1"));
+                cus.setAddress2(resultSet.getString("address2"));
+                cus.setEmail(resultSet.getString("email"));
+                cus.setMobile(resultSet.getInt("mobile"));
+                cus.setNic(resultSet.getString("password"));
+                customers.add(cus);
+            }
+        }catch(ClassNotFoundException | SQLException e){
+            System.out.print(e.getMessage());
+        }
+        
+        return customers;
+   }
+   
+    public Customer getCustomer(int userId){
+       Customer customer = new Customer();
+         try{
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
+            Statement statement = conn.createStatement();
+            
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM user WHERE userId = '"+userId+"'");
+            
+            resultSet.next();
+            customer.setUserId(resultSet.getInt("userId"));
+            customer.setfName(resultSet.getString("fName"));
+            customer.setLname(resultSet.getString("lName"));
+            customer.setAddress1(resultSet.getString("address1"));
+            customer.setAddress2(resultSet.getString("address2"));
+            customer.setEmail(resultSet.getString("email"));
+            customer.setMobile(resultSet.getInt("mobile"));
+            customer.setNic(resultSet.getString("nic"));
+            customer.setUsername(resultSet.getString("username"));
+            customer.setPassword(resultSet.getString("password"));
+                    
+        }catch(ClassNotFoundException | SQLException e){
+            System.out.print(e.getMessage());
+        }
+        
+        return customer;
+   }
+    
+    public boolean updateCustomer(Customer customer){
+       int rowAffected = 0;
+        try{
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
+            Statement statement = conn.createStatement();
+            rowAffected = statement.executeUpdate("UPDATE user SET fName = '"+customer.getfName()+"',lName = '"+customer.getLname()+"',nic = '"+customer.getNic()+"',address1 = '"+customer.getAddress1()+"',address2 = '"+customer.getAddress2()+"',email = '"+customer.getEmail()+"',username = '"+customer.getUsername()+"',password = '"+customer.getPassword()+"',mobile = '"+customer.getMobile()+"' WHERE userId = '"+customer.getUserId()+"'");
+        }catch(ClassNotFoundException | SQLException e){
+            System.out.print(e.getMessage());
+        }
+       return rowAffected > 0;
+   }
+   
 }
